@@ -1,15 +1,12 @@
-import express from "express"
-import cors from 'cors'
-const app = express();
-const port = 3000
-app.use(cors())
-app.use(express.static('/Auth.ak'))
+import "dotenv/config"
+import { connectDB } from "./db/connectDB.js"
+import { app } from "./app.js"
 
-app.get('/api', function (req,res){
-    res.download("server")
-    res.send('Server is Running');
+connectDB().then(()=>{ 
+    app.listen(process.env.PORT,()=>{
+        console.log("start server");
+    })
 })
-
-app.listen(port, ()=>{
-    console.log("server Start");
+.catch(()=>{
+    console.log("Server Don't run");
 })
